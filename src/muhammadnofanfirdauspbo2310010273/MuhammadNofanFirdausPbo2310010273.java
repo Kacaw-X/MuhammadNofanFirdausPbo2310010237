@@ -20,5 +20,7 @@ public class MuhammadNofanFirdausPbo2310010273 {
         new frameTersangka().setVisible(true);
         
         new frameSpdp().setVisible(true);
+        
+        new frameDetailSpdp().setVisible(true);
     }
 }
