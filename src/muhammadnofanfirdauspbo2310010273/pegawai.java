@@ -15,6 +15,18 @@ import javax.swing.JOptionPane;
 import javax.swing.table.*;
 import javax.swing.JTable;
 import java.sql.ResultSetMetaData;
+    import java.io.File;
+    import net.sf.jasperreports.engine.JREmptyDataSource;
+    import net.sf.jasperreports.engine.JRException;
+    import net.sf.jasperreports.engine.JasperCompileManager; 
+    import net.sf.jasperreports.engine.JasperFillManager; 
+    import net.sf.jasperreports.engine.JasperPrint;
+    import net.sf.jasperreports.engine.JasperReport;
+    import net.sf.jasperreports.engine.design.JRDesignQuery; 
+    import net.sf.jasperreports.engine.design.JasperDesign; 
+    import net.sf.jasperreports.engine.xml.JRXmlLoader; 
+    import net.sf.jasperreports.view.JasperViewer;
+
 
 /**
  *
@@ -131,4 +143,22 @@ public class pegawai {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
-}
+    
+    public void tampilLaporan(String laporanFile, String SQL){
+            try {
+              File file = new File (laporanFile);
+              JasperDesign jasDes = JRXmlLoader.load(file);
+
+               JRDesignQuery sqlQuery = new JRDesignQuery();
+               sqlQuery.setText(SQL);
+               jasDes.setQuery(sqlQuery);
+
+               JasperReport JR = JasperCompileManager.compileReport(jasDes);
+               JasperPrint JP = JasperFillManager.fillReport(JR,null,this.koneksidb); 
+               JasperViewer.viewReport(JP,false);
+             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,e.toString());       
+
+             }
+    }
+    }
